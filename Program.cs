@@ -44,7 +44,7 @@ namespace Abner_WebAPI_Backend
             app.MapControllers();
 
             app.Run();
-            Console.WriteLine("");
+           
         }
     }
 }
