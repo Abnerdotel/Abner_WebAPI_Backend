@@ -8,7 +8,7 @@ namespace Abner_WebAPI_Backend.Persistence
     {
         public static string Path = @"C:\\P2\\Asignations\\Abner_WebAPI_Backend\\Json\\Userjson.json";
 
-        public static void guardarJson()
+        public static void SaveJson()
         {
             List<UserModel> usuarios = UserService.ListaUsuario;
 

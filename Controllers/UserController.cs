@@ -1,7 +1,9 @@
 ﻿using Abner_WebAPI_Backend.Model;
+using Abner_WebAPI_Backend.Persistence;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace Abner_WebAPI_Backend.Controllers
 {
@@ -9,26 +11,68 @@ namespace Abner_WebAPI_Backend.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        List<UserModel> users = new();
+        public static List<UserModel> ListaUsuario = new();
 
         [HttpGet("Usuarios")]
-        public IActionResult GetUsers()
+        public IEnumerable<UserModel> GetUsers()
         {
-
-            return Ok(users);
-
+            return ListaUsuario;
         }
+
 
         [HttpPost("Registro")]
         public IActionResult SetUsers([FromBody] UserModel usuario)
         {
+            try
+            {
+                foreach (UserModel user in ListaUsuario)
+                {
+                    if (user.email == usuario.email)
+                    {
+                        return Conflict();
 
+                    }
+                }
+                if (ListaUsuario.Count > 0)
+                {
+
+                    usuario.Userid = ListaUsuario.Last<UserModel>().Userid + 1;
+                }
+                else
+                {
+                    usuario.Userid = 1;
+                }
+
+                ListaUsuario.Add(usuario);
+                UserPersistence.SaveJson();
+                return Ok(usuario);
+
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("Login")]
 
         public IActionResult Register([FromBody] UserValidationModel usuario)
         {
+            foreach (var user in ListaUsuario)
+            {
+                if (user.email == usuario.email)
+                {
+                    if (user.password == usuario.password)
+                    {
+                        return Ok(user);
+
+                    }
+                    else return Unauthorized();
+                }
+            }
+
+            return NotFound();
         }
     }
 }
