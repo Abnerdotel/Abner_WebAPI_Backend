@@ -36,11 +36,11 @@ namespace Abner_WebAPI_Backend.Controllers
                 if (ListaUsuario.Count > 0)
                 {
 
-                    usuario.Userid = ListaUsuario.Last<UserModel>().Userid + 1;
+                    usuario.userid = ListaUsuario.Last<UserModel>().userid + 1;
                 }
                 else
                 {
-                    usuario.Userid = 1;
+                    usuario.userid = 1;
                 }
 
                 ListaUsuario.Add(usuario);

@@ -4,7 +4,7 @@
     {
         //atributos parte 2, asinacion 3s
 
-        public int Contactid { get; set; }
+        public int contactid { get; set; }
         public string name { get; set; }
 
         public string phone { get; set; }
