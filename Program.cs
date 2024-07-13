@@ -34,7 +34,7 @@ namespace Abner_WebAPI_Backend
             }
 
             UserPersistence.Readjson();
-            //ContactPersistence.
+          ContactPersistence.ReadJson(userId: 1 );
 
             app.UseHttpsRedirection();
 
