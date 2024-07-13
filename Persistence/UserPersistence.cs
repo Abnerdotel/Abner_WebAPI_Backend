@@ -1,16 +1,18 @@
-﻿using Abner_WebAPI_Backend.Model;
-using Abner_WebAPI_Backend.Services;
+using Abner_WebAPI_Backend.Controllers;
+using Abner_WebAPI_Backend.Model;
+
 using Newtonsoft.Json;
+
 
 namespace Abner_WebAPI_Backend.Persistence
 {
     public class UserPersistence
     {
-        public static string Path = @"C:\\P2\\Asignations\\Abner_WebAPI_Backend\\Json\\Userjson.json";
+        public static string Path = "C:\\P2\\Asignations\\Abner_WebAPI_Backend\\Json\\Userjson.json";
 
         public static void SaveJson()
         {
-            List<UserModel> usuarios = UserService.ListaUsuario;
+            List<UserModel> usuarios = UserController.UserList;
 
 
             var Json = JsonConvert.SerializeObject(usuarios.ToArray(), Formatting.Indented);
@@ -27,13 +29,14 @@ namespace Abner_WebAPI_Backend.Persistence
                     string json = reader.ReadToEnd();
                     //Console.WriteLine(json);                       
                     var JsonUsuario = JsonConvert.DeserializeObject<List<UserModel>>(json);
-                    foreach (var JUser in JsonUsuario) { UserService.ListaUsuario.Add(JUser); }
+                    foreach (var JUser in JsonUsuario) { UserController.UserList.Add(JUser); }
 
                 }
             }
             else
             {
                 File.CreateText(Path);
+                
             }
         }
     }
