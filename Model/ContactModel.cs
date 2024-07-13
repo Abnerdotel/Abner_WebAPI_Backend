@@ -11,6 +11,6 @@
 
         public string email { get; set; }
 
-        public string adress { get; set; }
+        public string address { get; set; }
     }
 }
