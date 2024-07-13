@@ -11,44 +11,27 @@ namespace Abner_WebAPI_Backend.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        public static List<UserModel> ListaUsuario = new();
+        public static List<UserModel> UserList = new();
 
-        [HttpGet("Usuarios")]
-        public IEnumerable<UserModel> GetUsers()
+        [HttpGet("Users")]
+        public IActionResult GetUsers()
         {
-            return ListaUsuario;
+            return Ok(UserList);
         }
 
-
-        [HttpPost("Registro")]
-        public IActionResult SetUsers([FromBody] UserModel usuario)
+        [HttpPost("Register")]
+        public IActionResult Register([FromBody] UserModel user)
         {
             try
             {
-                foreach (UserModel user in ListaUsuario)
-                {
-                    if (user.email == usuario.email)
-                    {
-                        return Conflict();
+                if (UserList.Any(u => u.email == user.email))
+                    return Conflict();
 
-                    }
-                }
-                if (ListaUsuario.Count > 0)
-                {
-
-                    usuario.userid = ListaUsuario.Last<UserModel>().userid + 1;
-                }
-                else
-                {
-                    usuario.userid = 1;
-                }
-
-                ListaUsuario.Add(usuario);
+                user.userid = UserList.Count > 0 ? UserList.Max(u => u.userid) + 1 : 1;
+                UserList.Add(user);
                 UserPersistence.SaveJson();
-                return Ok(usuario);
-
+                return Ok(user);
             }
-
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -56,23 +39,13 @@ namespace Abner_WebAPI_Backend.Controllers
         }
 
         [HttpPost("Login")]
-
-        public IActionResult Register([FromBody] UserValidationModel usuario)
+        public IActionResult Login([FromBody] UserValidationModel model)
         {
-            foreach (var user in ListaUsuario)
-            {
-                if (user.email == usuario.email)
-                {
-                    if (user.password == usuario.password)
-                    {
-                        return Ok(user);
+            var user = UserList.FirstOrDefault(u => u.email == model.email);
+            if (user == null || user.password != model.password)
+                return Unauthorized();
 
-                    }
-                    else return Unauthorized();
-                }
-            }
-
-            return NotFound();
+            return Ok(user);
         }
     }
 }
