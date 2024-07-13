@@ -7,10 +7,6 @@ using System.Linq;
 
 namespace Abner_WebAPI_Backend.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UserController : ControllerBase
-    {
         public static List<UserModel> UserList = new();
 
         [HttpGet("Users")]
@@ -47,5 +43,5 @@ namespace Abner_WebAPI_Backend.Controllers
 
             return Ok(user);
         }
-    }
+    
 }
