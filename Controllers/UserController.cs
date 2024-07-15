@@ -1,4 +1,5 @@
-﻿using Abner_WebAPI_Backend.Model;
+﻿using Abner_WebAPI_Backend.Interfaces;
+using Abner_WebAPI_Backend.Model;
 using Abner_WebAPI_Backend.Persistence;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -11,12 +12,17 @@ namespace Abner_WebAPI_Backend.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        public static List<UserModel> UserList = new();
+        private readonly IUserService _userService;
+
+        public UserController(IUserService userService)
+        {
+            _userService = userService;
+        }
 
         [HttpGet("Users")]
         public IActionResult GetUsers()
         {
-            return Ok(UserList);
+            return Ok(_userService.GetUsers());
         }
 
         [HttpPost("Register")]
@@ -24,13 +30,8 @@ namespace Abner_WebAPI_Backend.Controllers
         {
             try
             {
-                if (UserList.Any(u => u.email == user.email))
-                    return Conflict();
-
-                user.userid = UserList.Count > 0 ? UserList.Max(u => u.userid) + 1 : 1;
-                UserList.Add(user);
-                UserPersistence.SaveJson();
-                return Ok(user);
+                var registeredUser = _userService.Register(user);
+                return Ok(registeredUser);
             }
             catch (Exception ex)
             {
@@ -41,11 +42,15 @@ namespace Abner_WebAPI_Backend.Controllers
         [HttpPost("Login")]
         public IActionResult Login([FromBody] UserValidationModel model)
         {
-            var user = UserList.FirstOrDefault(u => u.email == model.email);
-            if (user == null || user.password != model.password)
-                return Unauthorized();
-
-            return Ok(user);
+            try
+            {
+                var user = _userService.Login(model);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(ex.Message);
+            }
         }
     }
 }
