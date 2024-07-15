@@ -1,7 +1,8 @@
+using Abner_WebAPI_Backend.Interfaces;
 using Abner_WebAPI_Backend.Model;
-using Abner_WebAPI_Backend.Persistence;
-using Microsoft.AspNetCore.Http;
+using Abner_WebAPI_Backend.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Abner_WebAPI_Backend.Controllers
 {
@@ -9,66 +10,69 @@ namespace Abner_WebAPI_Backend.Controllers
     [ApiController]
     public class ContactController : ControllerBase
     {
+        private readonly IContactService _contactService;
+
+        public ContactController(IContactService contactService)
+        {
+            _contactService = contactService;
+        }
+
         [HttpGet("user/{userId}")]
         public IActionResult GetContacts(int userId)
         {
-            var user = UserController.UserList.FirstOrDefault(u => u.userid == userId);
-            if (user == null)
-                return NotFound("User not found");
-
-            return Ok(user.Contacts);
+            try
+            {   var contacts = _contactService.GetContacts(userId);
+                //var contacts = _contactService.GetContacts(userId);
+                return Ok(contacts);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpPost("user/{userId}")]
         public IActionResult AddContact(int userId, [FromBody] ContactModel contact)
         {
-            var user = UserController.UserList.FirstOrDefault(u => u.userid == userId);
-            if (user == null)
-                return NotFound("User not found");
-
-            contact.contactid = user.Contacts.Any() ? user.Contacts.Max(c => c.contactid) + 1 : 1;
-            user.Contacts.Add(contact);
-            ContactPersistence.SaveJson(userId);
-            return Ok(contact);
+            try
+            {
+                var addedContact = _contactService.AddContact(userId, contact);
+                return Ok(addedContact);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpPut("user/{userId}/contact/{contactId}")]
         public IActionResult UpdateContact(int userId, int contactId, [FromBody] ContactModel updatedContact)
         {
-            var user = UserController.UserList.FirstOrDefault(u => u.userid == userId);
-            if (user == null)
-                return NotFound("User not found");
-
-            var contact = user.Contacts.FirstOrDefault(c => c.contactid == contactId);
-            if (contact == null)
-                return NotFound("Contact not found");
-
-            contact.name = updatedContact.name;
-            contact.phone = updatedContact.phone;
-            contact.email = updatedContact.email;
-            contact.address = updatedContact.address;
-
-            UserPersistence.SaveJson();
-            return Ok(contact);
+            try
+            {
+                var updated = _contactService.UpdateContact(userId, contactId, updatedContact);
+                return Ok(updated);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpDelete("user/{userId}/contact/{contactId}")]
         public IActionResult DeleteContact(int userId, int contactId)
         {
-            var user = UserController.UserList.FirstOrDefault(u => u.userid == userId);
-            if (user == null)
-                return NotFound("User not found");
-
-            var contact = user.Contacts.FirstOrDefault(c => c.contactid == contactId);
-            if (contact == null)
-                return NotFound("Contact not found");
-
-            user.Contacts.Remove(contact);
-            UserPersistence.SaveJson();
-            return Ok("Contact deleted");
-
-
+            try
+            {
+                var result = _contactService.DeleteContact(userId, contactId);
+                if (result)
+                    return Ok("Contact deleted");
+                return BadRequest("Failed to delete contact");
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
     }
 }
-

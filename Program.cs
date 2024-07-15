@@ -18,10 +18,20 @@ namespace Abner_WebAPI_Backend
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            //Agregando servicios
-            //builder.Services.AddScoped<IUserService, UserServices>();
-            //builder.Services.AddScoped<IContactService, ContactService>();
-            //builder.Services.AddScoped<IRepository<contacto>(sp => new ContactPersistencia<contacto>("C:\\P2\\Asignacioness\\Abner_WebAPI\\json2.json"));
+            builder.Services.AddScoped<IContactService, ContactService>();
+            builder.Services.AddScoped<IUserService, UserService>();
+                   
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
+                    });
+            });
 
 
             var app = builder.Build();

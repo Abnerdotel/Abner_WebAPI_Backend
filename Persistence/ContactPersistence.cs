@@ -1,17 +1,18 @@
 using Abner_WebAPI_Backend.Controllers;
 using Abner_WebAPI_Backend.Interfaces;
 using Abner_WebAPI_Backend.Model;
+using Abner_WebAPI_Backend.Services;
 using Newtonsoft.Json;
 
 namespace Abner_WebAPI_Backend.Persistence
 {
-    public class ContactPersistence : IContactService
+    public class ContactPersistence 
     {
-        public static string Path = "C:\\P2\\Asignations\\Abner_WebAPI_Backend\\Json\\Contactjson.json";
+        public static string Path = "C:\\P2\\Nueva carpeta\\API_Rest\\Json\\Contactjson.json";
 
         public static void SaveJson(int userId)
         {
-            var user = UserController.UserList.FirstOrDefault(u => u.userid == userId);
+            var user = UserService.UserList.FirstOrDefault(u => u.userid == userId);
             if (user != null)
             {
                 var Json = JsonConvert.SerializeObject(user.Contacts, Formatting.Indented);
@@ -27,7 +28,7 @@ namespace Abner_WebAPI_Backend.Persistence
                 {
                     string json = reader.ReadToEnd();
                     var contacts = JsonConvert.DeserializeObject<List<ContactModel>>(json);
-                    var user = UserController.UserList.FirstOrDefault(u => u.userid == userId);
+                    var user = UserService.UserList.FirstOrDefault(u => u.userid == userId);
 
                     if (user != null)
                     {
