@@ -21,8 +21,8 @@ namespace Abner_WebAPI_Backend.Controllers
         public IActionResult GetContacts(int userId)
         {
             try
-            {   var contacts = _contactService.GetContacts(userId);
-                //var contacts = _contactService.GetContacts(userId);
+            {
+                var contacts = _contactService.GetContacts(userId);
                 return Ok(contacts);
             }
             catch (Exception ex)
@@ -30,7 +30,6 @@ namespace Abner_WebAPI_Backend.Controllers
                 return NotFound(ex.Message);
             }
         }
-
 
         [HttpPost("user/{userId}")]
         public IActionResult AddContact(int userId, [FromBody] ContactModel contact)
