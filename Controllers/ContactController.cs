@@ -31,6 +31,7 @@ namespace Abner_WebAPI_Backend.Controllers
             }
         }
 
+
         [HttpPost("user/{userId}")]
         public IActionResult AddContact(int userId, [FromBody] ContactModel contact)
         {
