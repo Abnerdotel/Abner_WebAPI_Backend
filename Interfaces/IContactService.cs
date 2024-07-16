@@ -2,7 +2,8 @@
 
 namespace Abner_WebAPI_Backend.Interfaces
 {
-  
+    public interface IContactService
+    {
         public interface IContactService
         {
             List<ContactModel> GetContacts(int userId);
@@ -10,5 +11,5 @@ namespace Abner_WebAPI_Backend.Interfaces
             ContactModel UpdateContact(int userId, int contactId, ContactModel updatedContact);
             bool DeleteContact(int userId, int contactId);
         }
-    
+    }
 }
