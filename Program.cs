@@ -1,4 +1,5 @@
 
+using Abner_WebAPI_Backend.Contexto;
 using Abner_WebAPI_Backend.Interfaces;
 using Abner_WebAPI_Backend.Persistence;
 using Abner_WebAPI_Backend.Services;
@@ -17,6 +18,8 @@ namespace Abner_WebAPI_Backend
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddSqlServer<UserContactsDBContext>(builder.Configuration.GetConnectionString("AppConection"));
 
             builder.Services.AddScoped<IContactService, ContactService>();
             builder.Services.AddScoped<IUserService, UserService>();

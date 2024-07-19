@@ -1,4 +1,5 @@
-﻿using Abner_WebAPI_Backend.Interfaces;
+﻿using Abner_WebAPI_Backend.Contexto;
+using Abner_WebAPI_Backend.Interfaces;
 using Abner_WebAPI_Backend.Model;
 using Abner_WebAPI_Backend.Persistence;
 
@@ -8,9 +9,16 @@ namespace Abner_WebAPI_Backend.Services
     {
         public static List<UserModel> UserList = new();
 
+        private readonly UserContactsDBContext dbContext;
+
+        public UserService(UserContactsDBContext dbContext)
+        {
+            this.dbContext = dbContext;
+        }
+
         public List<UserModel> GetUsers()
         {
-            return UserList;
+            return dbContext.Usuario.ToList();
         }
 
         public UserModel Register(UserModel user)

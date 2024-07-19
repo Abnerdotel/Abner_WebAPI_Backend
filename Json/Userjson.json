@@ -1,3 +1,18 @@
 [
-
+  {
+    "userid": 1,
+    "name": "string",
+    "lastname": "string",
+    "email": "string",
+    "password": "string",
+    "Contacts": [
+      {
+        "contactid": 0,
+        "name": "string",
+        "phone": "string",
+        "email": "string",
+        "address": "string"
+      }
+    ]
+  }
 ]

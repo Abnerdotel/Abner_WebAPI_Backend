@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abner_WebAPI_Backend", "Abner_WebAPI_Backend.csproj", "{23EF8364-0CDD-4B41-AAC3-C51EB3034C5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abner_WebAPI_Backend", "Abner_WebAPI_Backend.csproj", "{23EF8364-0CDD-4B41-AAC3-C51EB3034C5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "capaDatos", "..\capaDatos\capaDatos.csproj", "{7F115D94-EAE0-4E2B-83A9-CF0D00BF2D3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "capaNegocio", "..\capaNegocio\capaNegocio.csproj", "{4776CBAD-AB99-4AEA-9B65-8097D8FB5CE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{23EF8364-0CDD-4B41-AAC3-C51EB3034C5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23EF8364-0CDD-4B41-AAC3-C51EB3034C5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23EF8364-0CDD-4B41-AAC3-C51EB3034C5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F115D94-EAE0-4E2B-83A9-CF0D00BF2D3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F115D94-EAE0-4E2B-83A9-CF0D00BF2D3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F115D94-EAE0-4E2B-83A9-CF0D00BF2D3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F115D94-EAE0-4E2B-83A9-CF0D00BF2D3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4776CBAD-AB99-4AEA-9B65-8097D8FB5CE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4776CBAD-AB99-4AEA-9B65-8097D8FB5CE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4776CBAD-AB99-4AEA-9B65-8097D8FB5CE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4776CBAD-AB99-4AEA-9B65-8097D8FB5CE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

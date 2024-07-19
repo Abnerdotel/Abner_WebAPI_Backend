@@ -1,9 +1,12 @@
-﻿namespace Abner_WebAPI_Backend.Model
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Abner_WebAPI_Backend.Model
 {
     public class ContactModel
     {
         //atributos parte 2, asinacion 3s
 
+        [Key]
         public int contactid { get; set; }
         public string name { get; set; }
 
